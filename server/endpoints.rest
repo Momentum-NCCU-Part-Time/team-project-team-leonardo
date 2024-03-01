@@ -1,0 +1,2 @@
+### GET All lists
+GET http://localhost:3000/invited
