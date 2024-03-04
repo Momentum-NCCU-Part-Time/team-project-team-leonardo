@@ -1,0 +1,11 @@
+### GET All lists
+GET http://localhost:3000/invited/guestlist
+
+### POST to create new contact
+POST http://localhost:3000/invited/guestlist
+   Content-Type: application/json
+
+   {
+      "firstName": "Jarrod",
+      "lastName": "Gatewood"
+   }
