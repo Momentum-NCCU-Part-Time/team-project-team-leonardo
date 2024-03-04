@@ -6,6 +6,6 @@ POST http://localhost:3000/invited/guestlist
    Content-Type: application/json
 
    {
-      "firstName": "Jarrod",
-      "lastName": "Gatewood"
+      "firstName": "Kidney",
+      "lastName": "Beans"
    }
