@@ -32,4 +32,6 @@ POST http://localhost:3000/invited/guestlist
             "response3": "Maybe Not"
          }
       ]
+      "firstName": "Kidney",
+      "lastName": "Beans"
    }
