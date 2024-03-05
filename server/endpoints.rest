@@ -1,11 +1,35 @@
-### GET All lists
+### GET All Contacts
 GET http://localhost:3000/invited/guestlist
 
-### POST to create new contact
+### GET Single Contact with Contact ID WORKING
+GET http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4
+
+### DELETE Single Contact with Contact ID NOT WORKING
+DELETE http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4
+
+### POST to create new contact WORKING
 POST http://localhost:3000/invited/guestlist
    Content-Type: application/json
 
    {
       "firstName": "Jarrod",
-      "lastName": "Gatewood"
+      "lastName": "Gatewood",
+      "location": {
+         "street": {
+            "number": 2803,
+            "name": "Tulip Poplar",
+            "city": "Durham",
+            "state": "North Carolina",
+            "postcode": 27704,
+            "phoneNumber": 9196196479,
+            "email": "gatejarr@gmail.com"
+         }
+      },
+      "answers": [
+         {
+            "response1": "YES",
+            "response2": "OBVIOUSLY",
+            "response3": "Maybe Not"
+         }
+      ]
    }
