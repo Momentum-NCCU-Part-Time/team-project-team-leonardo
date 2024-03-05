@@ -9,7 +9,7 @@ const port = process.env.PORT;
 // Mongoose Connection
 mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
-db.once("open", () => console.log( "💒 Connected to MongoDB 💒"));
+db.once("open", () => console.log("💒 Connected to MongoDB 💒"));
 
 const app = express();
 app.use(express.json());
@@ -18,14 +18,48 @@ app.use(morgan("dev"));
 
 // Models
 const contactList = require("./models/guestList");
+const guestList = require("./models/guestList");
 
-app.get("/invited/guestList", (req, res) => {
-    contactList.find().then((results) => res.status(200).json(results));
-})
+// GET all contacts WORKING
+app.get("/invited/guestlist", (req, res) => {
+  contactList.find().then((results) => res.status(200).json(results));
+});
 
-app.post("/invited/guestList", (req, res) => {
-    const newContact = new contactList(req.body);
-    newContact.save();
-    res.status(201).json(newContact);
-  });
+// GET single contact using id WORKING
+app.get("/invited/guestlist/:_id", (req, res) => {
+  contactList
+    .findById(req.params._id)
+    .then((results) => {
+      if (results) {
+        res.status(200).json(results);
+      } else {
+        res.status(404).json({ message: "Guest not found" });
+      }
+    })
+    .catch((error) => res.status(401).json({ message: "Bad request" }));
+});
+
+// POST new contact WORKING
+app.post("/invited/guestlist", (req, res) => {
+  const newContact = new contactList(req.body);
+  newContact.save();
+  res.status(201).json(newContact);
+});
+
+// DELETE contact with ID NOT WORKING
+app.delete("/invited/guestlist/:_id", (req, res) => {
+  contactList
+    .findById(req.params._id)
+    .then((results) => {
+      if (results) {
+        contactList.contact._id(req.params.contactId).deleteOne();
+        contactList.save();
+        res.status(200).json(contactList);
+      } else {
+        res.status(400).json({ message: "Guest not found" });
+      }
+    })
+    .catch((error) => res.status(400).json({ message: "Bad request" }));
+});
+
 app.listen(port, () => console.log(`Application is running on port ${port}`));
