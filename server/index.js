@@ -46,20 +46,20 @@ app.post("/invited/guestlist", (req, res) => {
   res.status(201).json(newContact);
 });
 
-// DELETE contact with ID NOT WORKING
+// DELETE contact with ID WORKING
 app.delete("/invited/guestlist/:_id", (req, res) => {
-  contactList
-    .findById(req.params._id)
-    .then((results) => {
-      if (results) {
-        contactList.contact._id(req.params.contactId).deleteOne();
-        contactList.save();
-        res.status(200).json(contactList);
+  contactList.findByIdAndDelete(req.params._id)
+    .then((contactList) => {
+      if (contactList) {
+        res.status(200).json({ message: "Contact Deleted" });
       } else {
-        res.status(400).json({ message: "Guest not found" });
+        res.status(404).json({ message: "Contact Not Found" });
       }
     })
-    .catch((error) => res.status(400).json({ message: "Bad request" }));
+    .catch((error) => res.status(400).json({ message: "Bad Delete Request " }));
 });
+
+// PATCH to update contacts NOT WORKING
+
 
 app.listen(port, () => console.log(`Application is running on port ${port}`));

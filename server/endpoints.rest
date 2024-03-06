@@ -4,16 +4,16 @@ GET http://localhost:3000/invited/guestlist
 ### GET Single Contact with Contact ID WORKING
 GET http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4
 
-### DELETE Single Contact with Contact ID NOT WORKING
-DELETE http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4
+### DELETE Single Contact with Contact ID WORKING
+DELETE http://localhost:3000/invited/guestlist/65e67610ff7affc2d96e5a19
 
 ### POST to create new contact WORKING
 POST http://localhost:3000/invited/guestlist
    Content-Type: application/json
 
    {
-      "firstName": "Jarrod",
-      "lastName": "Gatewood",
+      "firstName": "Breanna",
+      "lastName": "Warren",
       "location": {
          "street": {
             "number": 2803,
@@ -21,8 +21,8 @@ POST http://localhost:3000/invited/guestlist
             "city": "Durham",
             "state": "North Carolina",
             "postcode": 27704,
-            "phoneNumber": 9196196479,
-            "email": "gatejarr@gmail.com"
+            "phoneNumber": 9196165376,
+            "email": "breanna.warren@gmail.com"
          }
       },
       "answers": [
