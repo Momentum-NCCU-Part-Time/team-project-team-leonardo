@@ -3,11 +3,10 @@ const express = require("express");
 const morgan = require("morgan");
 const mongoose = require("mongoose");
 const cors = require("cors");
-var indexRouter = require("./routes/index");
-var authRouter = require("./routes/auth");
+const path = require("path");
+const bcrypt = require("bcrypt");
 
-const port = process.env.PORT;
-
+const port = 3000;
 // Mongoose Connection
 mongoose.connect(process.env.DATABASE_URL);
 const db = mongoose.connection;
@@ -17,9 +16,17 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
-
+app.set("view engine", "ejs");
 // Models
 const contactList = require("./models/guestList");
+
+app.get("/", (req, res) => {
+  res.render("login");
+});
+
+app.get("signup", (req, res) => {
+  res.render("signup");
+});
 
 app.get("/invited/guestList", (req, res) => {
   contactList.find().then((results) => res.status(200).json(results));
