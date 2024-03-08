@@ -4,8 +4,11 @@ GET http://localhost:3000/invited/guestlist
 ### GET Single Contact with Contact ID WORKING
 GET http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4
 
+### GET Answers for a Contact with ID 
+GET http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4/answers/65e66fda4dc1f2992192eac5
+
 ### DELETE Single Contact with Contact ID WORKING
-DELETE http://localhost:3000/invited/guestlist/65e67610ff7affc2d96e5a19
+DELETE http://localhost:3000/invited/guestlist/65ea540c82a10e5e70b6a5e0
 
 ### POST to create new contact WORKING
 POST http://localhost:3000/invited/guestlist
@@ -32,4 +35,20 @@ POST http://localhost:3000/invited/guestlist
             "response3": "Maybe Not"
          }
       ]
+   }
+
+### PATCH to update contact first name
+PATCH http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4
+   Content-Type: application/json
+
+   {
+      "firstName": "Jarrod"
+   }
+
+### PATCH to update answers NOT WORKING
+PATCH http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4/answers/65e66fda4dc1f2992192eac5
+   Content-Type: application/json
+
+   {
+      "response1": "NO"
    }
