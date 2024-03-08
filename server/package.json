@@ -11,14 +11,21 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "concurrently": "^8.2.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
     "express": "^4.18.3",
-    "mongoose": "^8.2.0",
+    "express-session": "^1.18.0",
+    "mkdirp": "^3.0.1",
+    "mongodb": "^6.4.0",
+    "mongoose": "^8.2.1",
     "morgan": "^1.10.0",
     "nodemon": "^3.1.0",
     "passport": "^0.7.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "pluralize": "^8.0.0",
+    "sqlite3": "^5.1.7"
   }
 }
