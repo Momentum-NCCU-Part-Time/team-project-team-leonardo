@@ -28,29 +28,55 @@ module.exports = mongoose.model("questions", questionsSchema);
 
 const contactSchema = new mongoose.Schema(
   {
-    firstName: { type: String },
-    lastName: { type: String },
+    name: { type: String, required: true },
     image: { type: Buffer },
-    location: {
-      street: {
-        number: { type: Number },
-        name: { type: String },
-        city: { type: String },
-        state: { type: String },
-        postcode: { type: Number },
-        phoneNumber: { type: Number },
-        email: { type: String },
-      },
+    email: { type: String, unique: true },
+    phone: { type: Number },
+    address: {
+      number: { type: Number },
+      street: { type: String },
+      city: { type: String },
+      state: { type: String },
+      postCode: { type: Number, minLength: 5, maxLength: 5 },
     },
     answers: [
       {
-        response1: { type: String },
-        response2: { type: String },
-        response3: { type: String },
+        type: new mongoose.Schema({
+          response1: { type: String },
+          response2: { type: String },
+          response3: { type: String },
+        }),
       },
     ],
   },
   { timestamps: true }
 );
+
+// const contactSchema = new mongoose.Schema(
+//   {
+//     firstName: { type: String },
+//     lastName: { type: String },
+//     image: { type: Buffer },
+//     location: {
+//       street: {
+//         number: { type: Number },
+//         name: { type: String },
+//         city: { type: String },
+//         state: { type: String },
+//         postcode: { type: Number },
+//         phoneNumber: { type: Number },
+//         email: { type: String },
+//       },
+//     },
+//     answers: [
+//       {
+//         response1: { type: String },
+//         response2: { type: String },
+//         response3: { type: String },
+//       },
+//     ],
+//   },
+//   { timestamps: true }
+// );
 
 module.exports = mongoose.model("contactList", contactSchema);
