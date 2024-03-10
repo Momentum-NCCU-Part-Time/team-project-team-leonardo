@@ -2,34 +2,48 @@
 GET http://localhost:3000/invited/guestlist
 
 ### GET Single Contact with Contact ID WORKING
-GET http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4
+GET http://localhost:3000/invited/guestlist/65ee045903c2792b5ac7ea2f
 
-### DELETE Single Contact with Contact ID NOT WORKING
-DELETE http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4
+### GET Answers for a Contact with ID NOT WORKING
+GET http://localhost:3000/invited/guestlist/65ee045903c2792b5ac7ea2f/answers
+
+### DELETE Single Contact with Contact ID WORKING
+DELETE http://localhost:3000/invited/guestlist/65ee045903c2792b5ac7ea2f
 
 ### POST to create new contact WORKING
 POST http://localhost:3000/invited/guestlist
    Content-Type: application/json
 
    {
-      "firstName": "Jarrod",
-      "lastName": "Gatewood",
-      "location": {
-         "street": {
-            "number": 2803,
-            "name": "Tulip Poplar",
-            "city": "Durham",
-            "state": "North Carolina",
-            "postcode": 27704,
-            "phoneNumber": 9196196479,
-            "email": "gatejarr@gmail.com"
-         }
+      "name": "Lola Warwood",
+      "email": "lolaww@gmail.com",
+      "phone": 911,
+      "address": {
+         "number": 2803,
+         "street": "Tulip Poplar",
+         "city": "Durham",
+         "state": "NC",
+         "postCode": 27704
       },
-      "answers": [
-         {
-            "response1": "YES",
-            "response2": "OBVIOUSLY",
-            "response3": "Maybe Not"
-         }
-      ]
+      "answers": [{
+         "response1": "No",
+         "response2": "Hell no",
+         "response3": "Maybe?"
+      }]
+   }
+
+### PATCH to update contact name WORKING
+PATCH http://localhost:3000/invited/guestlist/65ee091780a0401fce632a89
+   Content-Type: application/json
+
+   {
+      "name": "Jarrod Warwood"
+   }
+
+### PATCH to update answers WORKING
+PATCH http://localhost:3000/invited/guestlist/65ee091780a0401fce632a89/answers/65ee091780a0401fce632a8a
+   Content-Type: application/json
+
+   {
+      "response3": "PLEASE?!?"
    }
