@@ -2,53 +2,48 @@
 GET http://localhost:3000/invited/guestlist
 
 ### GET Single Contact with Contact ID WORKING
-GET http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4
+GET http://localhost:3000/invited/guestlist/65ee045903c2792b5ac7ea2f
 
-### GET Answers for a Contact with ID 
-GET http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4/answers/65e66fda4dc1f2992192eac5
+### GET Answers for a Contact with ID NOT WORKING
+GET http://localhost:3000/invited/guestlist/65ee045903c2792b5ac7ea2f/answers
 
 ### DELETE Single Contact with Contact ID WORKING
-DELETE http://localhost:3000/invited/guestlist/65ea540c82a10e5e70b6a5e0
+DELETE http://localhost:3000/invited/guestlist/65ee045903c2792b5ac7ea2f
 
 ### POST to create new contact WORKING
 POST http://localhost:3000/invited/guestlist
    Content-Type: application/json
 
    {
-      "firstName": "Breanna",
-      "lastName": "Warren",
-      "location": {
-         "street": {
-            "number": 2803,
-            "name": "Tulip Poplar",
-            "city": "Durham",
-            "state": "North Carolina",
-            "postcode": 27704,
-            "phoneNumber": 9196165376,
-            "email": "breanna.warren@gmail.com"
-         }
+      "name": "Lola Warwood",
+      "email": "lolaww@gmail.com",
+      "phone": 911,
+      "address": {
+         "number": 2803,
+         "street": "Tulip Poplar",
+         "city": "Durham",
+         "state": "NC",
+         "postCode": 27704
       },
-      "answers": [
-         {
-            "response1": "YES",
-            "response2": "OBVIOUSLY",
-            "response3": "Maybe Not"
-         }
-      ]
+      "answers": [{
+         "response1": "No",
+         "response2": "Hell no",
+         "response3": "Maybe?"
+      }]
    }
 
-### PATCH to update contact first name
-PATCH http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4
+### PATCH to update contact name WORKING
+PATCH http://localhost:3000/invited/guestlist/65ee091780a0401fce632a89
    Content-Type: application/json
 
    {
-      "firstName": "Jarrod"
+      "name": "Jarrod Warwood"
    }
 
-### PATCH to update answers NOT WORKING
-PATCH http://localhost:3000/invited/guestlist/65e66fda4dc1f2992192eac4/answers/65e66fda4dc1f2992192eac5
+### PATCH to update answers WORKING
+PATCH http://localhost:3000/invited/guestlist/65ee091780a0401fce632a89/answers/65ee091780a0401fce632a8a
    Content-Type: application/json
 
    {
-      "response1": "NO"
+      "response3": "PLEASE?!?"
    }
