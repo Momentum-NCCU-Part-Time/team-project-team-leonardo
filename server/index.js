@@ -25,6 +25,7 @@ app.use(morgan("dev"));
 app.set("view engine", "ejs");
 //static file
 app.use(express.static("public"));
+
 // Models
 const contactList = require("./models/guestList");
 const guestList = require("./models/guestList");
@@ -70,7 +71,10 @@ app.post("/login", async (req, res) => {
     }
 
     //compare the hash password in DB with plain text
-    const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
+    const isPasswordMatch = await bcrypt.compare(
+      req.body.password,
+      check.password
+    );
     if (isPasswordMatch) {
       res.render("index");
     } else {
@@ -80,6 +84,20 @@ app.post("/login", async (req, res) => {
     res.send("Please try again");
   }
 });
+
+// Display contact card
+app.get("/invited/guestlist", async (req, res) => {
+  try {
+    const guests = await contactList.find();
+    res.render("pages/index", { guests });
+  } catch (err) {
+    res.status(500).json({ message: "internal server error" });
+  }
+});
+
+// app.get("/", (req, res) => {
+//   res.render("pages/index", { guests });
+// });
 
 // GET all contacts WORKING
 app.get("/invited/guestlist", (req, res) => {
