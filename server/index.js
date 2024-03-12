@@ -15,6 +15,12 @@ const imgSchema = require("./models/images");
 
 const app = express();
 
+// express to find files from node modules
+app.use(
+  "/css",
+  express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))
+);
+
 //convert data into json format
 
 const port = process.env.PORT;
