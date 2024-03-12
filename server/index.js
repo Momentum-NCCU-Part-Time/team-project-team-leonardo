@@ -15,6 +15,12 @@ const imgSchema = require("./models/images");
 
 const app = express();
 
+// express to find files from node modules
+app.use(
+  "/css",
+  express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))
+);
+
 //convert data into json format
 
 const port = process.env.PORT;
@@ -60,7 +66,9 @@ app.post("/", upload.single("image"), (req, res, next) => {
     name: req.body.name,
     desc: req.body.desc,
     img: {
-      data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
+      data: fs.readFileSync(
+        path.join(__dirname + "/uploads/" + req.file.filename)
+      ),
       contentType: "image/png",
     },
   };
@@ -76,7 +84,7 @@ app.post("/", upload.single("image"), (req, res, next) => {
 // END Images add in
 
 // Models
-const contact = require("./models/guestList");
+const contactList = require("./models/guestList");
 const guestList = require("./models/guestList");
 const { resolve6 } = require("dns/promises");
 
@@ -120,7 +128,10 @@ app.post("/login", async (req, res) => {
     }
 
     //compare the hash password in DB with plain text
-    const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
+    const isPasswordMatch = await bcrypt.compare(
+      req.body.password,
+      check.password
+    );
     if (isPasswordMatch) {
       res.render("newEvent");
     } else {
@@ -131,14 +142,28 @@ app.post("/login", async (req, res) => {
   }
 });
 
+// Display contact card
+app.get("/invited/guestlist", async (req, res) => {
+  try {
+    const guests = await contactList.find();
+    res.render("pages/store", { guests });
+  } catch (err) {
+    res.status(500).json({ message: "internal server error" });
+  }
+});
+
+// app.get("/invited/guestlist", (req, res) => {
+//   res.render("pages/index", { guests });
+// });
+
 // GET all contacts WORKING
 app.get("/invited/guestlist", (req, res) => {
-  contact.find().then((results) => res.status(200).json(results));
+  contactList.find().then((results) => res.status(200).json(results));
 });
 
 // GET single contact using id WORKING
 app.get("/invited/guestlist/:_id", (req, res) => {
-  contact
+  contactList
     .findById(req.params._id)
     .then((results) => {
       if (results) {
@@ -150,75 +175,27 @@ app.get("/invited/guestlist/:_id", (req, res) => {
     .catch((error) => res.status(401).json({ message: "Bad request" }));
 });
 
-// GET answers for a contact using id NOT WORKING, showing all contact info
-app.get("/invited/guestlist/:_id/answers/", (req, res) => {
-  contact
-    .findById(req.params._id)
-    .then((results) => {
-      if (results) {
-        res.status(200).json(results);
-      } else {
-        res.status(404).json({ message: "Answers not found" });
-      }
-    })
-    .catch((error) => res.status(401).json({ message: "Bad request" }));
-});
-
 // POST new contact WORKING
 app.post("/invited/guestlist", (req, res) => {
-  const newContact = new contact(req.body);
+  const newContact = new contactList(req.body);
   newContact.save();
   res.status(201).json(newContact);
 });
 
-// DELETE contact with ID WORKING
+// DELETE contact with ID NOT WORKING
 app.delete("/invited/guestlist/:_id", (req, res) => {
-  contact
-    .findByIdAndDelete(req.params._id)
-    .then((contact) => {
-      if (contact) {
-        res.status(200).json({ message: "Contact Deleted" });
+  contactList
+    .findById(req.params._id)
+    .then((results) => {
+      if (results) {
+        contactList.contact._id(req.params.contactId).deleteOne();
+        contactList.save();
+        res.status(200).json(contactList);
       } else {
-        res.status(404).json({ message: "Contact Not Found" });
+        res.status(400).json({ message: "Guest not found" });
       }
     })
-    .catch((error) => res.status(400).json({ message: "Bad Delete Request " }));
-});
-
-// PATCH to update contact name WORKING
-app.patch("/invited/guestlist/:_id", (req, res) => {
-  contact.findById(req.params._id).then((contact) => {
-    if (contact) {
-      contact.name = req.body.name || contact.name;
-      contact.save();
-      res.status(200).json(contact);
-    } else {
-      res.status(404).json({ message: "Contact not found" });
-    }
-  });
-});
-
-// PATCH to update answers WORKING
-app.patch("/invited/guestlist/:contactId/answers/:answersId", (req, res) => {
-  contact.findById(req.params.contactId).then((contact) => {
-    if (!contact) {
-      res.status(404).json({ message: "Contact Not Found" });
-    } else {
-      const answers = contact.answers.id(req.params.answersId);
-      if (!answers) {
-        res.status(404).json({ message: "Answers not found" });
-      } else {
-        const { response1, response2, response3 } = req.body;
-        answers.response1 = response1 || answers.response1;
-        answers.response2 = response2 || answers.response2;
-        answers.response3 = response3 || answers.response3;
-        contact
-          .save()
-          .then(() => res.status(201).json(answers))
-          .catch((error) => res.status(400).json({ message: "Bad Request " }));
-      }
-    }
-  });
+    .catch((error) => res.status(400).json({ message: "Bad request" }));
 });
 
 app.listen(port, () => console.log(`Application is running on port ${port}`));
