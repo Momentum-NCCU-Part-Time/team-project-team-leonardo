@@ -8,10 +8,10 @@ const bcrypt = require("bcrypt");
 const collection = require("./config");
 
 // Adding in for images
-const bodyParser = require('body-parser');
-const fs = require('fs');
-const multer = require('multer');
-const imgSchema = require('./models/images')
+const bodyParser = require("body-parser");
+const fs = require("fs");
+const multer = require("multer");
+const imgSchema = require("./models/images");
 
 const app = express();
 
@@ -37,45 +37,40 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads')
+    cb(null, "uploads");
   },
   filename: (req, file, cb) => {
-    cb(null, file.fieldname + '-' + Date.now())
-  }
+    cb(null, file.fieldname + "-" + Date.now());
+  },
 });
 
 const upload = multer({ storage: storage });
 
-app.get('/', (req, res) => {
-  imgSchema.find({})
-  .then((data, err)=>{
-      if(err){
-          console.log(err);
-      }
-      res.render('imagePage',{items: data})
-  })
+app.get("/", (req, res) => {
+  imgSchema.find({}).then((data, err) => {
+    if (err) {
+      console.log(err);
+    }
+    res.render("imagePage", { items: data });
+  });
 });
 
-
-app.post('/', upload.single('image'), (req, res, next) => {
-
+app.post("/", upload.single("image"), (req, res, next) => {
   var obj = {
-      name: req.body.name,
-      desc: req.body.desc,
-      img: {
-          data: fs.readFileSync(path.join(__dirname + '/uploads/' + req.file.filename)),
-          contentType: 'image/png'
-      }
-  }
-  imgSchema.create(obj)
-  .then ((err, item) => {
-      if (err) {
-          console.log(err);
-      }
-      else {
-          // item.save();
-          res.redirect('/');
-      }
+    name: req.body.name,
+    desc: req.body.desc,
+    img: {
+      data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
+      contentType: "image/png",
+    },
+  };
+  imgSchema.create(obj).then((err, item) => {
+    if (err) {
+      console.log(err);
+    } else {
+      // item.save();
+      res.redirect("/");
+    }
   });
 });
 // END Images add in
@@ -125,12 +120,9 @@ app.post("/login", async (req, res) => {
     }
 
     //compare the hash password in DB with plain text
-    const isPasswordMatch = await bcrypt.compare(
-      req.body.password,
-      check.password
-    );
+    const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
     if (isPasswordMatch) {
-      res.render("index");
+      res.render("newEvent");
     } else {
       req.send("wrong password");
     }
