@@ -8,7 +8,7 @@
     />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>Invited</title>
+    <title></title>
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
     <!-- Google fonts-->
     <link
@@ -20,21 +20,19 @@
       rel="stylesheet"
     />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
-  </head>
+<link rel="stylesheet" href="style.css">  </head>
   <body>
     <header>
       <h1 class="site-heading text-center text-faded d-none d-lg-block">
-        <span class="site-heading-upper text-primary mb-3"
-          >Make Your Event Pop</span
-        >
-        <span class="site-heading-lower">Example Heading</span>
-      </h1>
+        
+       
     </header>
-    <section style="background-color: beige" class="prompt">
+    <body>
+    <section style="background-color:beige;" class="prompt">
       <h3>Invited</h3>
-      <h1>Sign up</h1>
-      <form action="/signup" method="post">
+      <h1>Sign in</h1>
+
+      <form action="/login" method="post">
         <section>
           <label for="username">Username</label>
           <input
@@ -43,23 +41,24 @@
             type="text"
             autocomplete="username"
             required
+            autofocus
           />
         </section>
         <section>
-          <label for="new-password">Password</label>
+          <label for="current-password">Password</label>
           <input
-            id="new-password"
+            id="current-password"
             name="password"
             type="password"
-            autocomplete="new-password"
+            autocomplete="current-password"
             required
           />
         </section>
-        <button type="submit">Sign Up</button>
+        <button type="submit">Sign In</button>
       </form>
       <hr />
       <p class="help">
-        Already have an account? <a href="login.html">Log In</a>
+        Don't have an account? <a href="/signup">Sign Up</a>
       </p>
     </section>
     <footer class="footer text-faded text-center py-5">
