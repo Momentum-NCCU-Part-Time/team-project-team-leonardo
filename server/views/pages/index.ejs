@@ -16,24 +16,33 @@
     </header>
     <span id="guest-container">
         <% guests.forEach(guest=> { %>
-            <div class="guest-card">
+            <div class="guest-cards">
                 <img src="https://randomuser.me/api/portraits/men/1.jpg,
                 <%= guest.image%>" />
 
-                <h2 class="guest-name">
-                    <%= guest.firstName %>
-                        <%= guest.lastName %>
-                </h2>
-                <p class="guest-location">
-                    <%= guest.location.street.number %>,
-                        <%= guest.location.street.name %>,
-                            <%= guest.location.street.city %>,
-                                <%= guest.location.street.state %>,
-                                    <%= guest.location.street.postcode %>,
-                                        <%= guest.location.street.phoneNumber %>,
-                                            <%= guest.location.street.email %>,
-                </p>
-                <% }); %>
+                <div class="guest-card">
+                    <h2 class="guest-name">
+                        <%= guest.name %>
+                    </h2>
+                    <p>Phone: <%= guest.phoneNumber %>
+                    </p>
+                    <p>Email:<%= guest.email %>
+                    </p>
+
+
+
+                    <p class="guest-location">
+                    <p>Address: <%= guest.address.number %>
+                            <%= guest.address.street %>
+                                <%= guest.address.city %>
+                                    <%= guest.address.state %>
+                                        <%= guest.address.postcode %>
+
+
+                    </p>
+                    <% }); %>
+                </div>
+            </div>
     </span>
     <span id="controls">
         <h2 id="list-controls">List Controls</h2>
