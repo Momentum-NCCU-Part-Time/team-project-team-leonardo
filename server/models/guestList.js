@@ -29,7 +29,14 @@ module.exports = mongoose.model("questions", questionsSchema);
 const contactSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    image: { type: Buffer },
+    image: [
+      {
+        type: new mongoose.Schema({
+          data: Buffer,
+          contentType: String,
+        }),
+      },
+    ],
     email: { type: String, unique: true },
     phone: { type: Number },
     address: {
