@@ -12,6 +12,7 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const multer = require("multer");
 const imgSchema = require("./models/images");
+const createEvent = require("./models/createEvent");
 
 const app = express();
 
@@ -152,9 +153,17 @@ app.get("/invited/guestlist", async (req, res) => {
   }
 });
 
-// app.get("/invited/guestlist", (req, res) => {
-//   res.render("pages/index", { guests });
-// });
+// GET created events
+app.get("/invited", (req, res) => {
+  createEvent.find().then((results) => res.status(200).json(results));
+});
+
+// POST new event
+app.post("/invited", (req, res) => {
+  const newEvent = new createEvent(req.body);
+  newEvent.save();
+  res.status(201).json(newEvent);
+});
 
 // GET all contacts WORKING
 app.get("/invited/guestlist", (req, res) => {
