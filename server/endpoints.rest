@@ -47,3 +47,17 @@ PATCH http://localhost:3000/invited/guestlist/65ee091780a0401fce632a89/answers/6
    {
       "response3": "PLEASE?!?"
    }
+
+
+### POST to create a new event
+POST http://localhost:3000/invited
+   Content-Type: application/json
+   
+   {
+"event": [
+   {
+      "eventName": "Test",
+      "eventDate": "03/10/2024"
+   }
+   ]
+   }
