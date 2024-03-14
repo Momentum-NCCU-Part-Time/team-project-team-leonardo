@@ -20,7 +20,8 @@
       rel="stylesheet"
     />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../css/bootstrap.min.css">
+   
   </head>
   <body>
     <header>
@@ -68,18 +69,82 @@
         </div>
       </div>
     </nav>
-    <section class="page-section cta">
+    <section style="text-align: center;" class="page-section cta">
       <div class="container">
-        <form>
-          <h3 label for="eventTitle">🎉 Name Your Event</h3>
-          <input id="eventTitle" type="text" placeholder="Event Name">
-          <br>
-          <h3 label for="guestnumber">🎉 Number of Attendees</h3>
-          <input id="guestnumber" type="number" placeholder="0">
-          <br>
-          <br>
-          <button type="submit">Submit</button>
+        <h3>Great events start here!</h3>
+       
+
+        <button id="cancelButton" onclick="addEvent(false)">Cancel</button>
+        <button id="createButton" onclick="addEvent(true)">Create Event</button>
+        <form id="newEventForm" class="newEvent" onsubmit="return createEvent(event)">
+          <input type="text" name="newEventName" placeholder="Event Name?" id="newEventInput" />
+          <button type="submit">Create</button>
         </form>
+        
+        
+        
+        <script>
+           let events = []; // Array to store events (declared globally)
+        let addingEvent = false;
+        let newEventName = "";
+      
+        
+        function getEvents() {
+          fetch('http://localhost:3000/invited/events', { // Adjust URL as needed
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' }
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              events = data; // Update the events array with fetched data
+            })
+            .catch((error) => {
+              console.error(error); // Handle errors
+            });
+        }
+        
+        function addEvent(value) {
+          addingEvent = value;
+          const cancelButton = document.getElementById("cancelButton");
+          const createButton = document.getElementById("createButton");
+          const newEventForm = document.getElementById("newEventForm");
+        
+          if (addingEvent) {
+            cancelButton.style.display = "block";
+            createButton.style.display = "none";
+            newEventForm.style.display = "block";
+          } else {
+            cancelButton.style.display = "none";
+            createButton.style.display = "block";
+            newEventForm.style.display = "none";
+            newEventInput.value = ""; // Reset event name input
+          }
+        }
+        
+        function createEvent(event) {
+          event.preventDefault(); // Prevent default form submission
+        
+          // Implement your fetch logic to create a new event (access data using document.getElementById("newEventInput").value)
+          fetch('http://localhost:3000/', { // Adjust URL as needed
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: document.getElementById("newEventInput").value })
+          })
+            .then((res) => res.json())
+            .then((newEvent) => {
+              events.push(newEvent); // Add the new event to the local array
+              // Handle successful event creation (optional)
+            })
+            .catch((error) => {
+              console.error(error); // Handle errors
+            });
+        }
+        
+        getEvents(); // Call getEvents on page load to display initial events
+        </script>
+
+        
+        
       </div>
     <footer class="footer text-faded text-center py-5">
       <div class="container">
