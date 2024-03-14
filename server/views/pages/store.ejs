@@ -63,7 +63,7 @@
             <h2 class="guest-name">
               <%= guest.name %>
             </h2>
-            <p>Phone: <%= guest.phoneNumber %>
+            <p>Phone: <%= guest.phone %>
             </p>
             <p>Email:<%= guest.email %>
             </p>
@@ -72,8 +72,8 @@
 
             <p class="guest-location">
             <p>Address: <%= guest.address.number %>
-                <%= guest.address.street %>
-                  <%= guest.address.city %>
+                <%= guest.address.street %><br>
+                  <%= guest.address.city %> ,
                     <%= guest.address.state %>
                       <%= guest.address.postcode %>
 
