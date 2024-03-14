@@ -165,6 +165,39 @@ app.post("/invited", (req, res) => {
   res.status(201).json(newEvent);
 });
 
+// GET event by id
+app.get("/invited/:eventId", (req, res) => {
+  createEvent
+    .findById(req.params.eventId)
+    .then((results) => {
+      if (results) {
+        res.status(200).json(results);
+      } else {
+        res.status(404).json({ message: "not found" });
+      }
+    })
+    .catch((error) => res.status(400).json({ message: "Bad request" }));
+});
+
+//PATCH add guest to event
+app.patch("/invited/:eventId/guests", (req, res) => {
+  const eventId = req.params.eventId;
+  createEvent
+    .findByIdAndUpdate(eventId, {
+      $push: {
+        contactList: req.body.guests,
+      },
+    })
+    .then((createEvent) => {
+      console.log("HERE", eventId);
+      if (createEvent) {
+        res.status(200).send(createEvent);
+      } else {
+        res.status(404).json({ message: " Event not found" });
+      }
+    });
+});
+
 // GET all contacts WORKING
 app.get("/invited/guestlist", (req, res) => {
   contactList.find().then((results) => res.status(200).json(results));

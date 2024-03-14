@@ -54,10 +54,34 @@ POST http://localhost:3000/invited
    Content-Type: application/json
    
    {
-"event": [
+
+      "eventName": "Test3",
+      "eventDate": "03/11/2024"
+ 
+   }
+
+###  
+PATCH http://localhost:3000/invited/65f35eb894dac7e559f63623/guests
+Content-Type: application/json
+
+{
+	"guests": [
    {
-      "eventName": "Test",
-      "eventDate": "03/10/2024"
+      "name": "Lola Warwood",
+      "email": "lolaww@gmail.com",
+      "phone": 911,
+      "address": {
+         "number": 2803,
+         "street": "Tulip Poplar",
+         "city": "Durham",
+         "state": "NC",
+         "postCode": 27704
+      },
+      "answers": [{
+         "response1": "No",
+         "response2": "Hell no",
+         "response3": "Maybe?"
+      }]
    }
    ]
-   }
+}

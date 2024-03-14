@@ -28,24 +28,26 @@ module.exports = mongoose.model("questions", questionsSchema);
 
 const contactSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    image: { type: Buffer },
-    email: { type: String, unique: true },
-    phone: { type: Number },
-    address: {
-      number: { type: Number },
-      street: { type: String },
-      city: { type: String },
-      state: { type: String },
-      postCode: { type: Number, minLength: 5, maxLength: 5 },
-    },
-    answers: [
+    guests: [
       {
-        type: new mongoose.Schema({
-          response1: { type: String },
-          response2: { type: String },
-          response3: { type: String },
-        }),
+        name: { type: String, required: true },
+        image: { type: Buffer },
+        email: { type: String, unique: true },
+        phone: { type: Number },
+        address: {
+          number: { type: Number },
+          street: { type: String },
+          city: { type: String },
+          state: { type: String },
+          postCode: { type: Number, minLength: 5, maxLength: 5 },
+        },
+        answers: [
+          {
+            response1: { type: String },
+            response2: { type: String },
+            response3: { type: String },
+          },
+        ],
       },
     ],
   },

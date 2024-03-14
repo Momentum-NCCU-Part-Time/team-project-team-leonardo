@@ -14,33 +14,18 @@
         <button class="header" id="profile">User Profile</button>
         <button class="header" id="create-event">Create Event</button>
     </header>
-    <span id="guest-container">
+    <span id="final-guest-container">
         <% guests.forEach(guest=> { %>
-            <div class="guest-cards">
+            <div class="invited-guest-cards">
                 <img src="https://randomuser.me/api/portraits/men/1.jpg,
                 <%= guest.image%>" />
 
-                <div class="guest-card">
+                <div class="invited-guest-card">
                     <h2 class="guest-name">
                         <%= guest.name %>
                     </h2>
                     <p>Phone: <%= guest.phoneNumber %>
-                    </p>
-                    <p>Email:<%= guest.email %>
-                    </p>
-
-
-
-                    <p class="guest-location">
-                    <p>Address: <%= guest.address.number %>
-                            <%= guest.address.street %>
-                                <%= guest.address.city %>
-                                    <%= guest.address.state %>
-                                        <%= guest.address.postcode %>
-
-
-                    </p>
-                    <% }); %>
+                            <% }); %>
                 </div>
             </div>
     </span>
