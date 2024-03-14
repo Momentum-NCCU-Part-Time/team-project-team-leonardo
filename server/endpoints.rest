@@ -2,7 +2,7 @@
 GET http://localhost:3000/invited/guestlist
 
 ### GET Single Contact with Contact ID WORKING
-GET http://localhost:3000/invited/guestlist/65ee045903c2792b5ac7ea2f
+GET http://localhost:3000/invited/guestlist/65f0e8dece92b252928dff69
 
 ### GET Answers for a Contact with ID NOT WORKING
 GET http://localhost:3000/invited/guestlist/65ee045903c2792b5ac7ea2f/answers
@@ -15,8 +15,9 @@ POST http://localhost:3000/invited/guestlist
    Content-Type: application/json
 
    {
-      "name": "Lola Warwood",
-      "email": "lolaww@gmail.com",
+      "name": "Jabroni Featherstone",
+      "image": "https://randomuser.me/api/portraits/men/75.jpg",
+      "email": "jabroni@gmail.com",
       "phone": 911,
       "address": {
          "number": 2803,

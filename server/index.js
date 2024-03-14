@@ -34,55 +34,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(morgan("dev"));
+
 // use EJS as the view egnine
 app.set("view engine", "ejs");
+
 //static file
 app.use(express.static("public"));
-
-// Adding in for IMAGES
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
-
-const upload = multer({ storage: storage });
-
-app.get("/", (req, res) => {
-  imgSchema.find({}).then((data, err) => {
-    if (err) {
-      console.log(err);
-    }
-    res.render("imagePage", { items: data });
-  });
-});
-
-app.post("/", upload.single("image"), (req, res, next) => {
-  var obj = {
-    name: req.body.name,
-    desc: req.body.desc,
-    img: {
-      data: fs.readFileSync(
-        path.join(__dirname + "/uploads/" + req.file.filename)
-      ),
-      contentType: "image/png",
-    },
-  };
-  imgSchema.create(obj).then((err, item) => {
-    if (err) {
-      console.log(err);
-    } else {
-      // item.save();
-      res.redirect("/");
-    }
-  });
-});
-// END Images add in
 
 // Models
 const contactList = require("./models/guestList");
@@ -216,6 +173,74 @@ app.get("/invited/guestlist/:_id", (req, res) => {
     })
     .catch((error) => res.status(401).json({ message: "Bad request" }));
 });
+
+// Adding in for IMAGES
+// app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.fieldname + "-" + Date.now());
+//   },
+// });
+
+// var upload = multer({ storage: storage });
+
+// app.get("/", (req, res) => {
+//   imgSchema.find({}).then((data, err) => {
+//     if (err) {
+//       console.log(err);
+//     }
+//     res.render("imagePage", { items: data });
+//   });
+// });
+
+// app.post("/", upload.single("image"), (req, res, next) => {
+//   var obj = {
+//     name: req.body.name,
+//     desc: req.body.desc,
+//     img: {
+//       data: fs.readFileSync(
+//         path.join(__dirname + "/uploads/" + req.file.filename)
+//       ),
+//       contentType: "image/png",
+//     },
+//   };
+//   imgSchema.create(obj).then((err, item) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       // item.save();
+//       res.redirect("/");
+//     }
+//   });
+// });
+// // END Images add in
+
+// app.post("/invited/guestlist", upload.single("image"), (req, res, next) => {
+//   const newContact = {
+//     name: req.body.name,
+//     phone: req.body.phone,
+//     email: req.body.email,
+//     address: req.body.address,
+//     img: {
+//       data: fs.readFileSync(
+//         path.join(__dirname + "/uploads/" + req.file.filename)
+//       ),
+//       contentType: "image/png",
+//     },
+//   };
+//   contactSchema.create(newContact).then((err, newContact) => {
+//     if (err) {
+//       console.log(err);
+//     } else {
+//       newContact.save();
+//       res.redirect("/invited/guestlist");
+//     }
+//   });
+// });
 
 // POST new contact WORKING
 app.post("/invited/guestlist", (req, res) => {
