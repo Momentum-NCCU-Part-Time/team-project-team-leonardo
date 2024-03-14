@@ -84,7 +84,7 @@
         
         
         <script>
-           let events = []; // Array to store events (declared globally)
+        let events = []; // Array to store events (declared globally)
         let addingEvent = false;
         let newEventName = "";
       
@@ -125,7 +125,7 @@
           event.preventDefault(); // Prevent default form submission
         
           // Implement your fetch logic to create a new event (access data using document.getElementById("newEventInput").value)
-          fetch('http://localhost:3000/', { // Adjust URL as needed
+          fetch('http://localhost:3000/invited', { // Adjust URL as needed
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title: document.getElementById("newEventInput").value })
