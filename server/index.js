@@ -84,6 +84,7 @@ app.post("/", upload.single("image"), (req, res, next) => {
 // END Images add in
 
 // Models
+const createEvent = require("./models/createEvent");
 const contactList = require("./models/guestList");
 const guestList = require("./models/guestList");
 const { resolve6 } = require("dns/promises");
