@@ -12,15 +12,11 @@ const bodyParser = require("body-parser");
 const fs = require("fs");
 const multer = require("multer");
 const imgSchema = require("./models/images");
-const createEvent = require("./models/createEvent");
 
 const app = express();
 
 // express to find files from node modules
-app.use(
-  "/css",
-  express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))
-);
+app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 
 //convert data into json format
 
@@ -34,12 +30,53 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(morgan("dev"));
-
 // use EJS as the view egnine
 app.set("view engine", "ejs");
-
 //static file
 app.use(express.static("public"));
+
+// Adding in for IMAGES
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.fieldname + "-" + Date.now());
+  },
+});
+
+const upload = multer({ storage: storage });
+
+app.get("/", (req, res) => {
+  imgSchema.find({}).then((data, err) => {
+    if (err) {
+      console.log(err);
+    }
+    res.render("imagePage", { items: data });
+  });
+});
+
+app.post("/", upload.single("image"), (req, res, next) => {
+  var obj = {
+    name: req.body.name,
+    desc: req.body.desc,
+    img: {
+      data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
+      contentType: "image/png",
+    },
+  };
+  imgSchema.create(obj).then((err, item) => {
+    if (err) {
+      console.log(err);
+    } else {
+      // item.save();
+      res.redirect("/");
+    }
+  });
+});
+// END Images add in
 
 // Models
 const contactList = require("./models/guestList");
@@ -86,10 +123,7 @@ app.post("/login", async (req, res) => {
     }
 
     //compare the hash password in DB with plain text
-    const isPasswordMatch = await bcrypt.compare(
-      req.body.password,
-      check.password
-    );
+    const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
     if (isPasswordMatch) {
       res.render("newEvent");
     } else {
@@ -110,50 +144,9 @@ app.get("/invited/guestlist", async (req, res) => {
   }
 });
 
-// GET created events
-app.get("/invited", (req, res) => {
-  createEvent.find().then((results) => res.status(200).json(results));
-});
-
-// POST new event
-app.post("/invited", (req, res) => {
-  const newEvent = new createEvent(req.body);
-  newEvent.save();
-  res.status(201).json(newEvent);
-});
-
-// GET event by id
-app.get("/invited/:eventId", (req, res) => {
-  createEvent
-    .findById(req.params.eventId)
-    .then((results) => {
-      if (results) {
-        res.status(200).json(results);
-      } else {
-        res.status(404).json({ message: "not found" });
-      }
-    })
-    .catch((error) => res.status(400).json({ message: "Bad request" }));
-});
-
-//PATCH add guest to event
-app.patch("/invited/:eventId/guests", (req, res) => {
-  const eventId = req.params.eventId;
-  createEvent
-    .findByIdAndUpdate(eventId, {
-      $push: {
-        contactList: req.body.guests,
-      },
-    })
-    .then((createEvent) => {
-      console.log("HERE", eventId);
-      if (createEvent) {
-        res.status(200).send(createEvent);
-      } else {
-        res.status(404).json({ message: " Event not found" });
-      }
-    });
-});
+// app.get("/invited/guestlist", (req, res) => {
+//   res.render("pages/index", { guests });
+// });
 
 // GET all contacts WORKING
 app.get("/invited/guestlist", (req, res) => {
@@ -173,74 +166,6 @@ app.get("/invited/guestlist/:_id", (req, res) => {
     })
     .catch((error) => res.status(401).json({ message: "Bad request" }));
 });
-
-// Adding in for IMAGES
-// app.use(bodyParser.urlencoded({ extended: false }));
-// app.use(bodyParser.json());
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, file.fieldname + "-" + Date.now());
-//   },
-// });
-
-// var upload = multer({ storage: storage });
-
-// app.get("/", (req, res) => {
-//   imgSchema.find({}).then((data, err) => {
-//     if (err) {
-//       console.log(err);
-//     }
-//     res.render("imagePage", { items: data });
-//   });
-// });
-
-// app.post("/", upload.single("image"), (req, res, next) => {
-//   var obj = {
-//     name: req.body.name,
-//     desc: req.body.desc,
-//     img: {
-//       data: fs.readFileSync(
-//         path.join(__dirname + "/uploads/" + req.file.filename)
-//       ),
-//       contentType: "image/png",
-//     },
-//   };
-//   imgSchema.create(obj).then((err, item) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       // item.save();
-//       res.redirect("/");
-//     }
-//   });
-// });
-// // END Images add in
-
-// app.post("/invited/guestlist", upload.single("image"), (req, res, next) => {
-//   const newContact = {
-//     name: req.body.name,
-//     phone: req.body.phone,
-//     email: req.body.email,
-//     address: req.body.address,
-//     img: {
-//       data: fs.readFileSync(
-//         path.join(__dirname + "/uploads/" + req.file.filename)
-//       ),
-//       contentType: "image/png",
-//     },
-//   };
-//   contactSchema.create(newContact).then((err, newContact) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       newContact.save();
-//       res.redirect("/invited/guestlist");
-//     }
-//   });
-// });
 
 // POST new contact WORKING
 app.post("/invited/guestlist", (req, res) => {
