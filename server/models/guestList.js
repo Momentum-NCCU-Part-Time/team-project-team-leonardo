@@ -48,6 +48,7 @@ const contactSchema = new mongoose.Schema(
         }),
       },
     ],
+    eventId: { type: mongoose.Schema.Types.ObjectId, ref: "createEvent" },
   },
   { timestamps: true }
 );

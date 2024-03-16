@@ -147,7 +147,7 @@ app.post("/login", async (req, res) => {
 app.get("/invited/guestlist", async (req, res) => {
   try {
     const guests = await contactList.find();
-    res.render("pages/store", { guests });
+    res.render("card", { guests });
   } catch (err) {
     res.status(500).json({ message: "internal server error" });
   }
@@ -158,15 +158,25 @@ app.get("/invited/guestlist", async (req, res) => {
 // });
 
 // GET created events
-app.get("/invited", (req, res) => {
-  createEvent.find().then((results) => res.status(200).json(results));
-});
+// app.get("/invited", (req, res) => {
+//   createEvent.find().then((results) => res.status(200).json(results));
+// });
 
 // POST new event
 app.post("/invited", (req, res) => {
   const newEvent = new createEvent(req.body);
   newEvent.save();
   res.status(201).json(newEvent);
+});
+
+// GET event, render to newEvent page
+app.get("/invited", async (req, res) => {
+  try {
+    const events = await createEvent.find();
+    res.render("newEvent", { events });
+  } catch (err) {
+    res.status(500).json({ message: "internal server error" });
+  }
 });
 
 // GET event by id
@@ -250,6 +260,56 @@ app.patch("/invited/:eventId/guests", (req, res) => {
         res.status(404).json({ message: " Event not found" });
       }
     });
+});
+
+// app.patch("/invited/:eventId/guest", async (req, res) => {
+//   try {
+//     const eventId = req.params.eventId;
+//     const guestData = req.body.guests; // Assuming the guest data is sent in the request body
+
+//     // Find the event by its ID and push the new guest to its 'guests' array
+//     const updatedEvent = await contactList.findByIdAndUpdate(
+//       eventId,
+//       { $push: { guests: guestData } },
+//       { new: true } // To return the updated document
+//     );
+
+//     if (updatedEvent) {
+//       res.status(200).json(updatedEvent);
+//     } else {
+//       res.status(404).json({ message: "Event not found" });
+//     }
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// });
+
+app.post("/invited/:eventId/guest", (req, res) => {
+  createEvent
+    .findById(eventId)
+    .populate("guests")
+    .exec((err, event) => {
+      if (err) {
+        // Handle error
+      } else {
+        console.log(event);
+      }
+    });
+});
+
+app.get("/invited/:eventId/guests", (req, res) => {
+  createEvent
+    .findById(req.params.eventId)
+    .populate("guests")
+    .then((results) => {
+      if (results) {
+        res.status(200).json(results);
+      } else {
+        res.status(404).json({ message: "not found" });
+      }
+    })
+    .catch((error) => res.status(400).json({ message: "Bad request" }));
 });
 
 // GET single contact using id WORKING
