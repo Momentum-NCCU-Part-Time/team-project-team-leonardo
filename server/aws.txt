@@ -1,0 +1,15 @@
+AWS DynamoDB
+https://www.freecodecamp.org/news/how-to-upload-files-to-aws-s3-with-node/
+https://s3.console.aws.amazon.com/s3/get-started?region=us-east-2
+
+email: gatejarr@gmail.com
+username: gatejarr
+PW: '9v2=@%%F,3rjZ3
+
+npm install formidable @aws-sdk/lib-storage @aws-sdk/client-s3
+
+NEXT STEP: 
+How to Upload to the S3 Bucket
+
+
+invitedcontactimages-uexbzp61tppjbsxfmxnjiikcukwkhuse2a-s3alias
