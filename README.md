@@ -14,13 +14,13 @@ Introducing Invited, your personal guest list planner! Struggling with guest lis
 ## Features
 
 Current Features
--Guest List Management: Easily create, edit, and manage guest lists within the app.
--Smart Recommendations: Answer questions on factors such as date of last interaction to help you decide whether a guest should make the cut.
+* Guest List Management: Easily create, edit, and manage guest lists within the app.  
+* Smart Recommendations: Answer questions on factors such as date of last interaction to help you decide whether a guest should make the cut.  
 
 Future Features 
--Social Integration: We plan to enable the app to integrate with your social media accounts or contact list to access your connections and their relevant information.
--Collaborative Features: The ability to collaborate with co-hosts or event organizers by sharing access to the guest list and coordinating invitations together.
--Invitation Delivery: After creating your finalized list, be able to instantly send invitations and track RSVPs.
+* Social Integration: We plan to enable the app to integrate with your social media accounts or contact list to access your connections and their relevant information.  
+* Collaborative Features: The ability to collaborate with co-hosts or event organizers by sharing access to the guest list and coordinating invitations together.  
+* Invitation Delivery: After creating your finalized list, be able to instantly send invitations and track RSVPs.  
 
 ## Installation
 
@@ -44,11 +44,11 @@ npm install vue
 
 ## Usage
 
--Getting Started: Create an account and log in to access your event dashboard.
--Create an Event: Once on your event dashboard, click "Create an event", give your new event a name, and set the guest limit.
--Adding Guests: Once your event has been created, add guests to your event guest list.
--Answer Guest Questions: Answer questions to help you decide if an guest should be invited.
--Finalize guest list: Make final decisions on who will be invited to your event!
+* Getting Started: Create an account and log in to access your event dashboard.  
+* Create an Event: Once on your event dashboard, click "Create an event", give your new event a name, and set the guest limit.  
+* Adding Guests: Once your event has been created, add guests to your event guest list.  
+* Answer Guest Questions: Answer questions to help you decide if an guest should be invited.  
+* Finalize guest list: Make final decisions on who will be invited to your event!  
 
 ## Contributing
 
