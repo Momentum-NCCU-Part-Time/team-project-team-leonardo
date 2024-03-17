@@ -7,6 +7,9 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const collection = require("./config");
 
+// AWS fileparser
+const fileparser = require("./fileparser");
+
 // Adding in for images
 const bodyParser = require("body-parser");
 const fs = require("fs");
@@ -50,6 +53,22 @@ app.get("/", (req, res) => {
   </div>
   <input type="submit" value="Upload" />
   </form>`);
+});
+
+app.post('/api/upload', async (req, res) => {
+  await fileparser(req)
+  .then(data => {
+    res.status(200).json({
+      message: "Success",
+      data
+    })
+  })
+  .catch(error => {
+    res.status(400).json({
+      message: "An Upload error occurred.",
+      error
+    })
+  })
 });
 
 // Adding in for IMAGES
