@@ -53,7 +53,7 @@ Introducing Invited, your personal guest list planner! Struggling with guest lis
 - Create an Event: Once on your event dashboard, click "Create an event", give your new event a name, and set the guest limit.
 - Adding Guests: Once your event has been created, add guests to your event guest list.
 - Answer Guest Questions: Answer questions to help you decide if an guest should be invited.
-- Finalize guest list: Make final decisions on who will be invited to your event!
+- Finalize List: Make final decisions on who will be invited to your event!
 
 ## Contributing
 
