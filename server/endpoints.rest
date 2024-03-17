@@ -2,7 +2,7 @@
 GET http://localhost:3000/invited/guestlist
 
 ### GET Single Contact with Contact ID WORKING
-GET http://localhost:3000/invited/guestlist/65f0e8dece92b252928dff69
+GET http://localhost:3000/invited/guestlist/65f3889ec76778f02afa6a23
 
 ### GET Answers for a Contact with ID NOT WORKING
 GET http://localhost:3000/invited/guestlist/65ee045903c2792b5ac7ea2f/answers
@@ -34,11 +34,11 @@ POST http://localhost:3000/invited/guestlist
    }
 
 ### PATCH to update contact name WORKING
-PATCH http://localhost:3000/invited/guestlist/65ee091780a0401fce632a89
+PATCH http://localhost:3000/invited/guestlist/65f3889ec76778f02afa6a23
    Content-Type: application/json
 
    {
-      "name": "Jarrod Warwood"
+      "name": "Jarrod Gatewood"
    }
 
 ### PATCH to update answers WORKING

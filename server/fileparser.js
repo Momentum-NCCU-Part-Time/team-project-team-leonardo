@@ -1,7 +1,7 @@
 // AWS S3 Setup - JG
 
 const { Upload } = require("@aws-sdk/lib-storage");
-const { S3Client } = require("@aws-sdk/client-s3");
+const { S3Client, S3 } = require("@aws-sdk/client-s3");
 const Transform = require('stream').Transform;
 
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
