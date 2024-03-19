@@ -167,14 +167,41 @@ app.get("/invited/guestlist", async (req, res) => {
   }
 });
 
+//GET event by id
+app.get("/invited/events/:eventId", async (req, res) => {
+  try {
+    const eventId = req.params.eventId;
+    createEvent.findById(eventId).then((event) => {
+      if (event) {
+        res.status(200).json(event);
+      } else {
+        res.status(404).json({ message: "Event not found" });
+      }
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("internal server error");
+  }
+});
+
 // app.get("/invited/guestlist", (req, res) => {
 //   res.render("pages/index", { guests });
 // });
 
 // GET created events
-// app.get("/invited", (req, res) => {
-//   createEvent.find().then((results) => res.status(200).json(results));
+// app.get("/invited/events", async (req, res) => {
+//   try {
+//     const createdEvent = await createEvent.find();
+//     res.render("createdEvent", { createdEvent });
+//   } catch (err) {
+//     res.status(500).json({ message: "internal server error" });
+//   }
 // });
+
+//GET all events
+app.get("/invited/events", (req, res) => {
+  createEvent.find().then((results) => res.status(200).json(results));
+});
 
 // POST new event
 app.post("/invited", (req, res) => {
@@ -184,28 +211,20 @@ app.post("/invited", (req, res) => {
 });
 
 // GET event, render to newEvent page
-app.get("/invited", async (req, res) => {
-  try {
-    const events = await createEvent.find();
-    res.render("newEvent", { events });
-  } catch (err) {
-    res.status(500).json({ message: "internal server error" });
-  }
-});
-
-// GET event by id
-app.get("/invited/:eventId", (req, res) => {
-  createEvent
-    .findById(req.params.eventId)
-    .then((results) => {
-      if (results) {
-        res.status(200).json(results);
-      } else {
-        res.status(404).json({ message: "not found" });
-      }
-    })
-    .catch((error) => res.status(400).json({ message: "Bad request" }));
-});
+// app.get("/invited", async (req, res) => {
+//   try {
+//     const events = await createEvent.find();
+//     res.render("getEvents", { events }).then((results) => {
+//       if (results) {
+//         res.status(200).json(results);
+//       } else {
+//         res.status(404).json({ message: "not found" });
+//       }
+//     });
+//   } catch (err) {
+//     res.status(500).json({ message: "internal server error" });
+//   }
+// });
 
 // PATCH add guest to event
 app.patch("/invited/:eventId/guests", (req, res) => {
@@ -275,29 +294,6 @@ app.patch("/invited/:eventId/guests", (req, res) => {
       }
     });
 });
-
-// app.patch("/invited/:eventId/guest", async (req, res) => {
-//   try {
-//     const eventId = req.params.eventId;
-//     const guestData = req.body.guests; // Assuming the guest data is sent in the request body
-
-//     // Find the event by its ID and push the new guest to its 'guests' array
-//     const updatedEvent = await contactList.findByIdAndUpdate(
-//       eventId,
-//       { $push: { guests: guestData } },
-//       { new: true } // To return the updated document
-//     );
-
-//     if (updatedEvent) {
-//       res.status(200).json(updatedEvent);
-//     } else {
-//       res.status(404).json({ message: "Event not found" });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: "Internal Server Error" });
-//   }
-// });
 
 app.post("/invited/:eventId/guest", (req, res) => {
   createEvent
