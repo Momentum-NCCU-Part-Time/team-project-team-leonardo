@@ -126,7 +126,7 @@ app.post("/login", async (req, res) => {
     //compare the hash password in DB with plain text
     const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
     if (isPasswordMatch) {
-      res.render("newEvent");
+      res.redirect("/invited");
     } else {
       req.send("wrong password");
     }
@@ -135,6 +135,9 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get("/invited", (req, res) => {
+  res.render("newEvent");
+});
 // Display contact card
 app.get("/invited/guestlist", async (req, res) => {
   try {
