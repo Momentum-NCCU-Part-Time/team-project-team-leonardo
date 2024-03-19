@@ -16,10 +16,7 @@ const imgSchema = require("./models/images");
 const app = express();
 
 // express to find files from node modules
-app.use(
-  "/css",
-  express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))
-);
+app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
 
 //convert data into json format
 
@@ -66,9 +63,7 @@ app.post("/", upload.single("image"), (req, res, next) => {
     name: req.body.name,
     desc: req.body.desc,
     img: {
-      data: fs.readFileSync(
-        path.join(__dirname + "/uploads/" + req.file.filename)
-      ),
+      data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
       contentType: "image/png",
     },
   };
@@ -129,10 +124,7 @@ app.post("/login", async (req, res) => {
     }
 
     //compare the hash password in DB with plain text
-    const isPasswordMatch = await bcrypt.compare(
-      req.body.password,
-      check.password
-    );
+    const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
     if (isPasswordMatch) {
       res.render("newEvent");
     } else {
