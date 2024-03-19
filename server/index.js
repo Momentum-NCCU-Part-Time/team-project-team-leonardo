@@ -10,12 +10,6 @@ const collection = require("./config");
 // AWS fileparser
 const fileparser = require("./fileparser");
 
-// Adding in for images
-const bodyParser = require("body-parser");
-const fs = require("fs");
-const multer = require("multer");
-const imgSchema = require("./models/images");
-
 const app = express();
 
 // express to find files from node modules
@@ -45,35 +39,34 @@ app.use(express.static("public"));
 app.set("json spaces", 5); // to pretify json response
 
 app.get("/", (req, res) => {
-  imgSchema.find({}).then((data, err) => {
-    if (err) {
-      console.log(err);
-    }
-    res.render("imagePage", { items: data });
-  });
+  res.send(`
+    <h2>File Upload With <code>"Node.js"</code></h2>
+    <form action="/api/upload" enctype="multipart/form-data" method="post">
+      <div>Select a file: 
+        <input name="file" type="file" />
+      </div>
+      <input type="submit" value="Upload" />
+    </form>
+
+  `);
 });
 
-app.post("/", upload.single("image"), (req, res, next) => {
-  var obj = {
-    name: req.body.name,
-    desc: req.body.desc,
-    img: {
-      data: fs.readFileSync(
-        path.join(__dirname + "/uploads/" + req.file.filename)
-      ),
-      contentType: "image/png",
-    },
-  };
-  imgSchema.create(obj).then((err, item) => {
-    if (err) {
-      console.log(err);
-    } else {
-      // item.save();
-      res.redirect("/");
-    }
-  });
+app.post("/api/upload", async (req, res) => {
+  await fileparser(req)
+    .then((data) => {
+      res.status(200).json({
+        message: "Success",
+        data,
+      });
+    })
+    .catch((error) => {
+      res.status(400).json({
+        message: "An error occurred.",
+        error,
+      });
+    });
 });
-// END Images add in
+// AWS S3 End
 
 // Models
 const createEvent = require("./models/createEvent");
