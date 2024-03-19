@@ -76,7 +76,8 @@
 
         <button  id="cancelButton" onclick="addEvent(false)">Cancel</button>
         <button id="createButton" onclick="addEvent(true)">Create Event</button>
-        <form id="newEventForm" class="newEvent" onsubmit="return createEvent(event)">
+
+        <form id="newEventForm" class="newEvent" onsubmit="createEvent">
           <input type="text" name="newEventName" placeholder="Event Name?" id="newEventInput" />
           <button type="submit">Create</button>
         </form>
@@ -88,9 +89,15 @@
         let addingEvent = false;
         let newEventName = "";
       
-        
+        const formElement = document.getElementById("newEventForm")
+     
+        formElement.addEventListener("submit", (e) => {
+  e.preventDefault()
+  createEvent()
+  console.log("form submitted")
+})
         function getEvents() {
-          fetch('http://localhost:3000/invited/events', { // Adjust URL as needed
+          fetch('http://localhost:3000/invited/', { // Adjust URL as needed
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
           })
@@ -121,14 +128,14 @@
           }
         }
         
-        function createEvent(event) {
-          event.preventDefault(); // Prevent default form submission
-        
+        function createEvent() {
+         
+        console.log("createeventcalled")
           // Implement your fetch logic to create a new event (access data using document.getElementById("newEventInput").value)
           fetch('http://localhost:3000/invited', { // Adjust URL as needed
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ title: document.getElementById("newEventInput").value })
+            body: JSON.stringify({ eventName: document.getElementById("newEventInput").value })
           })
             .then((res) => res.json())
             .then((newEvent) => {
@@ -154,6 +161,6 @@
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
+  
   </body>
 </html>
