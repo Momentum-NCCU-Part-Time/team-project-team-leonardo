@@ -36,15 +36,35 @@ app.use(express.static("public"));
 app.set("json spaces", 5); // to pretify json response
 
 app.get("/", (req, res) => {
-  res.send(`
-  <h2>File Upload With <code>"Node.js"</code></h2>
-  <form action="/api/upload" enctype-"multipart/form-data" method="post">
-  <div>Select a file:
-  <input type="file" name="file" multiple="multiple" />
-  </div>
-  <input type="submit" value="Upload" />
-  </form>`);
+  imgSchema.find({}).then((data, err) => {
+    if (err) {
+      console.log(err);
+    }
+    res.render("imagePage", { items: data });
+  });
 });
+
+app.post("/", upload.single("image"), (req, res, next) => {
+  var obj = {
+    name: req.body.name,
+    desc: req.body.desc,
+    img: {
+      data: fs.readFileSync(
+        path.join(__dirname + "/uploads/" + req.file.filename)
+      ),
+      contentType: "image/png",
+    },
+  };
+  imgSchema.create(obj).then((err, item) => {
+    if (err) {
+      console.log(err);
+    } else {
+      // item.save();
+      res.redirect("/");
+    }
+  });
+});
+// END Images add in
 
 // Models
 const createEvent = require("./models/createEvent");
@@ -97,7 +117,7 @@ app.post("/login", async (req, res) => {
       check.password
     );
     if (isPasswordMatch) {
-      res.render("newEvent");
+      res.redirect("/invited");
     } else {
       req.send("wrong password");
     }
@@ -106,6 +126,9 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get("/invited", (req, res) => {
+  res.render("newEvent");
+});
 // Display contact card
 app.get("/invited/guestlist", async (req, res) => {
   try {
