@@ -7,6 +7,9 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const collection = require("./config");
 
+// AWS fileparser
+const fileparser = require("./fileparser");
+
 // Adding in for images
 const bodyParser = require("body-parser");
 const fs = require("fs");
@@ -16,7 +19,10 @@ const imgSchema = require("./models/images");
 const app = express();
 
 // express to find files from node modules
-app.use("/css", express.static(path.join(__dirname, "node_modules/bootstrap/dist/css")));
+app.use(
+  "/css",
+  express.static(path.join(__dirname, "node_modules/bootstrap/dist/css"))
+);
 
 //convert data into json format
 
@@ -35,19 +41,8 @@ app.set("view engine", "ejs");
 //static file
 app.use(express.static("public"));
 
-// Adding in for IMAGES
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
-
-const upload = multer({ storage: storage });
+// AWS S3 Setup - JG - Can see basic page at http://localhost:3000 when server is running
+app.set("json spaces", 5); // to pretify json response
 
 app.get("/", (req, res) => {
   imgSchema.find({}).then((data, err) => {
@@ -63,7 +58,9 @@ app.post("/", upload.single("image"), (req, res, next) => {
     name: req.body.name,
     desc: req.body.desc,
     img: {
-      data: fs.readFileSync(path.join(__dirname + "/uploads/" + req.file.filename)),
+      data: fs.readFileSync(
+        path.join(__dirname + "/uploads/" + req.file.filename)
+      ),
       contentType: "image/png",
     },
   };
@@ -124,7 +121,10 @@ app.post("/login", async (req, res) => {
     }
 
     //compare the hash password in DB with plain text
-    const isPasswordMatch = await bcrypt.compare(req.body.password, check.password);
+    const isPasswordMatch = await bcrypt.compare(
+      req.body.password,
+      check.password
+    );
     if (isPasswordMatch) {
       res.redirect("/invited");
     } else {
