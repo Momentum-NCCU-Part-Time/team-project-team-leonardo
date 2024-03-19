@@ -17,7 +17,7 @@ const eventSchema = new mongoose.Schema({
   // event: [
   //   {
   eventName: { type: String, required: true },
-  eventDate: { type: String, required: true },
+  //eventDate: { type: String, required: true },
   guests: [],
 });
 module.exports = mongoose.model("createEvent", eventSchema);
