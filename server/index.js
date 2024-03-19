@@ -7,6 +7,15 @@ const path = require("path");
 const bcrypt = require("bcrypt");
 const collection = require("./config");
 
+// AWS fileparser
+const fileparser = require("./fileparser");
+
+// Adding in for images
+const bodyParser = require("body-parser");
+const fs = require("fs");
+const multer = require("multer");
+const imgSchema = require("./models/images");
+
 const app = express();
 
 // express to find files from node modules
