@@ -175,9 +175,9 @@ app.get("/invited/events/:eventId", async (req, res) => {
 //test get render
 
 //GET all events
-// app.get("/invited/events", (req, res) => {
-//   createEvent.find().then((results) => res.status(200).json(results));
-// });
+app.get("/invited/events", (req, res) => {
+  createEvent.find().then((results) => res.status(200).json(results));
+});
 
 app.get("/invited/events", (req, res) => {
   res.render("newEvent", { createEvent });

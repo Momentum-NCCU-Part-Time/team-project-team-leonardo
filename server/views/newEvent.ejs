@@ -65,7 +65,13 @@
       </form>
 
       <h1>Events List</h1>
-      <ul id="eventsList"></ul>
+      <ul id="eventsList">
+        <% events.forEach(event=> { %>
+          <li>
+            <%= event.eventName %>
+          </li>
+          <% }); %>
+      </ul>
 
       <script>
         let events = []; // Array to store events (declared globally)
@@ -79,23 +85,36 @@
           createEvent()
           console.log("form submitted")
         })
-        function getEvents() {
-          fetch('http://localhost:3000/invited/', { // Adjust URL as needed
-            method: 'GET',
-            headers: { 'Content-Type': 'application/json' }
-          })
-          createEvent.find()
-            .then((res) => res.json())
-            .then((data) => {
-              events = data; // Update the events array with fetched data
-              console.log(data)
-            })
-          console.log(data)
-            .catch((error) => {
-              console.error(error); // Handle errors
-              console.log(res)
-            });
-        }
+        // function getEvents() {
+        //   fetch('http://localhost:3000/invited/events', { // Adjust URL as needed
+        //     method: 'GET',
+        //     headers: { 'Content-Type': 'application/json' }
+        //   })
+        //     // createEvent.find()
+        //     .then((res) => res.json())
+        //     .then((data) => {
+        //       events = data; // Update the events array with fetched data
+        //       console.log(events)
+        //     })
+        //   console.log(events)
+        //     .catch((error) => {
+        //       console.error(error); // Handle errors
+        //       console.log(res)
+        //     });
+        // }
+        app.get("/invited/events", async (req, res) => {
+          try {
+            // Fetch events from the database
+            const events = await createEvent.find();
+
+            // Render the EJS view and pass the fetched events as a variable
+            res.render('events', { events });
+          } catch (error) {
+            // Handle errors
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+          }
+        });
 
         function addEvent(value) {
           addingEvent = value;
@@ -145,6 +164,7 @@
           });
         }
         renderEvents(events)
+        console.log(events)
         getEvents(); 
       </script>
 
