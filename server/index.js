@@ -35,6 +35,12 @@ app.set("view engine", "ejs");
 //static file
 app.use(express.static("public"));
 
+// Models
+const createEvent = require("./models/createEvent");
+const contactList = require("./models/guestList");
+const guestList = require("./models/guestList");
+const { resolve6 } = require("dns/promises");
+
 // AWS S3 Setup - JG - Can see basic page at http://localhost:3000 when server is running
 app.set("json spaces", 5); // to pretify json response
 
@@ -67,12 +73,6 @@ app.post("/api/upload", async (req, res) => {
     });
 });
 // AWS S3 End
-
-// Models
-const createEvent = require("./models/createEvent");
-const contactList = require("./models/guestList");
-const guestList = require("./models/guestList");
-const { resolve6 } = require("dns/promises");
 
 app.get("/login", (req, res) => {
   res.render("login");
@@ -166,16 +166,35 @@ app.get("/invited/events/:eventId", async (req, res) => {
 // app.get("/invited/events", async (req, res) => {
 //   try {
 //     const createdEvent = await createEvent.find();
-//     res.render("createdEvent", { createdEvent });
+//     // res.render("createdEvent", { newEvent });
 //   } catch (err) {
 //     res.status(500).json({ message: "internal server error" });
 //   }
 // });
 
+//test get render
+
 //GET all events
+// app.get("/invited/events", (req, res) => {
+//   createEvent.find().then((results) => res.status(200).json(results));
+// });
+
 app.get("/invited/events", (req, res) => {
-  createEvent.find().then((results) => res.status(200).json(results));
+  res.render("newEvent", { createEvent });
 });
+// app.get("/invited/events", async (req, res) => {
+//   try {
+//     // Fetch events from the database
+//     const events = await createEvent.find();
+
+//     // Render the EJS view and pass the fetched events as a variable
+//     res.render("events", { newEvent });
+//   } catch (error) {
+//     // Handle errors
+//     console.error(error);
+//     res.status(500).send("Internal Server Error");
+//   }
+// });
 
 // POST new event
 app.post("/invited", (req, res) => {
@@ -185,7 +204,7 @@ app.post("/invited", (req, res) => {
 });
 
 // GET event, render to newEvent page
-// app.get("/invited", async (req, res) => {
+// app.get("/invited/events", async (req, res) => {
 //   try {
 //     const events = await createEvent.find();
 //     res.render("getEvents", { events }).then((results) => {
