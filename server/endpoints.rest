@@ -57,7 +57,7 @@ POST http://localhost:3000/invited
    {
 
       "eventName": "Test3",
-     // "eventDate": "03/11/2024"
+      "eventDate": "03/11/2024"
  
    }
 
