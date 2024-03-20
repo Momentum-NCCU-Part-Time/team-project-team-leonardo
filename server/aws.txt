@@ -1,5 +1,6 @@
 AWS DynamoDB
 https://www.freecodecamp.org/news/how-to-upload-files-to-aws-s3-with-node/
+https://saturncloud.io/blog/how-to-upload-a-file-to-amazon-s3-with-nodejs/#3
 https://s3.console.aws.amazon.com/s3/get-started?region=us-east-2
 
 email: gatejarr@gmail.com
