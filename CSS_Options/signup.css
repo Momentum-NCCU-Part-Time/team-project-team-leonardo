@@ -1,0 +1,117 @@
+/* General Styles */
+body {
+  font-family: 'Raleway', sans-serif;
+  background-color: #f8f9fa;
+  color: #343a40;
+}
+
+h1, h3 {
+  font-family: 'Lora', serif;
+}
+
+.container {
+  max-width: 960px;
+}
+
+/* Header Styles */
+header {
+  background-color: #343a40;
+  color: #fff;
+  padding: 50px 0;
+}
+
+.site-heading {
+  text-align: center;
+}
+
+.site-heading-upper {
+  font-size: 18px;
+  color: #007bff;
+}
+
+.site-heading-lower {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+/* Prompt Section Styles */
+.prompt {
+  background-color: beige;
+  padding: 50px;
+  border-radius: 10px;
+  margin: 50px auto;
+  width: 80%;
+  max-width: 600px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+}
+
+.prompt h1 {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.prompt h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+section {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+}
+
+button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+.help {
+  font-size: 16px;
+}
+
+.help a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.help a:hover {
+  text-decoration: underline;
+}
+
+/* Footer Styles */
+.footer {
+  background-color: #343a40;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
