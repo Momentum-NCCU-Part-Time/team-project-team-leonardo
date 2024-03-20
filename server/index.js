@@ -9,6 +9,7 @@ const collection = require("./config");
 
 // AWS fileparser
 const fileparser = require("./fileparser");
+// AWS fileparser end
 
 const app = express();
 
@@ -60,8 +61,9 @@ app.post("/api/upload", async (req, res) => {
       });
     })
     .catch((error) => {
+      console.log(error);
       res.status(400).json({
-        message: "An error occurred.",
+        message: "An upload error occurred.",
         error,
       });
     });

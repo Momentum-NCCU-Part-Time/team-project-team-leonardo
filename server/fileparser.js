@@ -1,6 +1,7 @@
 const { Upload } = require("@aws-sdk/lib-storage");
 const { S3Client } = require("@aws-sdk/client-s3");
 const Transform = require("stream").Transform;
+const { formidable } = require("formidable");
 
 const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
 const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
@@ -29,7 +30,9 @@ const parsefile = async (req) => {
     });
 
     form.on("fileBegin", (formName, file) => {
+      console.log("file begin");
       file.open = async function () {
+        console.log("file open");
         this._writeStream = new Transform({
           transform(chunk, encoding, callback) {
             callback(null, chunk);
@@ -50,7 +53,7 @@ const parsefile = async (req) => {
             region,
           }),
           params: {
-            ACL: "public-read",
+            // ACL: "public-read",
             Bucket,
             Key: `${Date.now().toString()}-${this.originalFilename}`,
             Body: this._writeStream,
@@ -62,6 +65,7 @@ const parsefile = async (req) => {
         })
           .done()
           .then((data) => {
+            console.log("Line 68?");
             form.emit("data", { name: "complete", value: data });
           })
           .catch((err) => {
