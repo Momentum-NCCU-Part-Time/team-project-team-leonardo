@@ -18,6 +18,6 @@ const eventSchema = new mongoose.Schema({
   //   {
   eventName: { type: String, required: true },
   //eventDate: { type: String, required: true },
-  guests: [],
+  guests: [{ type: mongoose.Schema.Types.Array, ref: "guestList" }],
 });
 module.exports = mongoose.model("createEvent", eventSchema);
