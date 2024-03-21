@@ -73,6 +73,7 @@
       <div class="container">
         <h3>Great events start here!</h3>
        
+        
 
         <button  id="cancelButton" onclick="addEvent(false)">Cancel</button>
         <button id="createButton" onclick="addEvent(true)">Create Event</button>
@@ -88,7 +89,7 @@
         let events = []; // Array to store events (declared globally)
         let addingEvent = false;
         let newEventName = "";
-      
+        
         const formElement = document.getElementById("newEventForm")
      
         formElement.addEventListener("submit", (e) => {
@@ -119,6 +120,8 @@
             });
            
         }
+
+        
      
         
         function addEvent(value) {
