@@ -73,12 +73,21 @@
             </h3>
 
             <ul>
-              <% event.guests.forEach(guest=> { %>
+              <% event.guests[0].forEach(guest=> { %>
                 <span>
                   <strong>Name:</strong>
                   <%= guest.name %><br>
                     <strong>Email:</strong>
                     <%= guest.email %><br>
+                      <strong>Phone number:</strong>
+                      <%= guest.phone %><br>
+                        <strong>Address:</strong><br>
+                        <%= guest.address.number %>
+                          <%= guest.address.street %><br>
+                            <%= guest.address.city %>,
+                              <%= guest.address.state %>
+                                <%= guest.address.postCode %><br>
+
 
                 </span>
                 <% }); %>
