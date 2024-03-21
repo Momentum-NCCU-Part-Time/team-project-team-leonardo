@@ -32,6 +32,7 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "pluralize": "^8.0.0",
-    "sqlite3": "^5.1.7"
+    "sqlite3": "^5.1.7",
+    "vue": "^3.4.21"
   }
 }

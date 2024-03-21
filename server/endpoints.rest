@@ -62,13 +62,13 @@ POST http://localhost:3000/invited
    }
 
 ###  
-PATCH http://localhost:3000/invited/65f35eb894dac7e559f63623/guests
+PATCH http://localhost:3000/invited/65fb9b2f1ca47982b8ef47a5
 Content-Type: application/json
 
 {
 	"guests": [
    {
-      "name": "Lola Warwood",
+      "name": "Anna Mae",
       "email": "lolaww@gmail.com",
       "phone": 911,
       "address": {
@@ -86,3 +86,9 @@ Content-Type: application/json
    }
    ]
 }
+
+### GET events
+GET http://localhost:3000/invited/events
+
+### GET events 
+GET http://localhost:3000/invited/events/65f35eb894dac7e559f63623
