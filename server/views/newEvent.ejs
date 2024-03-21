@@ -66,11 +66,27 @@
 
       <h1>Events List</h1>
       <ul id="eventsList">
+
         <% events.forEach(event=> { %>
-          <li>
-            <%= event.eventName %>
-          </li>
+          <div>
+            <h3>Event: <%= event.eventName %>
+            </h3>
+
+            <ul>
+              <% event.guests.forEach(guest=> { %>
+                <span>
+                  <strong>Name:</strong>
+                  <%= guest.name %><br>
+                    <strong>Email:</strong>
+                    <%= guest.email %><br>
+
+                </span>
+                <% }); %>
+            </ul>
+
+          </div>
           <% }); %>
+
       </ul>
 
       <script>
@@ -85,6 +101,7 @@
           createEvent()
           console.log("form submitted")
         })
+
         // function getEvents() {
         //   fetch('http://localhost:3000/invited/events', { // Adjust URL as needed
         //     method: 'GET',
@@ -102,19 +119,7 @@
         //       console.log(res)
         //     });
         // }
-        app.get("/invited/events", async (req, res) => {
-          try {
-            // Fetch events from the database
-            const events = await createEvent.find();
 
-            // Render the EJS view and pass the fetched events as a variable
-            res.render('events', { events });
-          } catch (error) {
-            // Handle errors
-            console.error(error);
-            res.status(500).send("Internal Server Error");
-          }
-        });
 
         function addEvent(value) {
           addingEvent = value;
@@ -152,20 +157,8 @@
             });
         }
 
-        function renderEvents(events) {
-          const eventsList = document.getElementById("eventsList");
-          console.log("HERE:", events)
 
-          events.forEach(event => {
-            const eventItem = document.createElement("li");
-            eventItem.textContent = event.eventName;
-            eventsList.appendChild(eventItem);
-
-          });
-        }
-        renderEvents(events)
-        console.log(events)
-        getEvents(); 
+        // getEvents(); 
       </script>
 
 

@@ -175,26 +175,26 @@ app.get("/invited/events/:eventId", async (req, res) => {
 //test get render
 
 //GET all events
-app.get("/invited/events", (req, res) => {
-  createEvent.find().then((results) => res.status(200).json(results));
-});
-
-app.get("/invited/events", (req, res) => {
-  res.render("newEvent", { createEvent });
-});
-// app.get("/invited/events", async (req, res) => {
-//   try {
-//     // Fetch events from the database
-//     const events = await createEvent.find();
-
-//     // Render the EJS view and pass the fetched events as a variable
-//     res.render("events", { newEvent });
-//   } catch (error) {
-//     // Handle errors
-//     console.error(error);
-//     res.status(500).send("Internal Server Error");
-//   }
+// app.get("/invited/events", (req, res) => {
+//   createEvent.find().then((results) => res.status(200).json(results));
 // });
+
+// app.get("/invited/events", (req, res) => {
+//   res.render("newEvent", { createEvent });
+// });
+
+//GET events and populates guest field
+app.get("/invited/events", async (req, res) => {
+  try {
+    const events = await createEvent.find().populate("guests");
+    console.log("HERE:", events);
+
+    res.render("newEvent", { events });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("internal server error");
+  }
+});
 
 // POST new event
 app.post("/invited", (req, res) => {
@@ -220,7 +220,7 @@ app.post("/invited", (req, res) => {
 // });
 
 // PATCH add guest to event
-app.patch("/invited/:eventId/guests", (req, res) => {
+app.patch("/invited/:eventId", (req, res) => {
   const eventId = req.params.eventId;
   createEvent
     .findByIdAndUpdate(req.params.eventId, {
